@@ -15,13 +15,13 @@ custom:
         version: v1.0.0
         title: Todo APP
         description: Serverless application Todo app
-      models:
-        - name: CreateTodoRequest
-          contentType: application/json
-          schema: ${file(models/create-todo-model.json)}
-        - name: UpdateTodoRequest
-          contentType: application/json
-          schema: ${file(models/update-todo-model.json)}
+    models:
+      - name: CreateTodoRequest
+        contentType: application/json
+        schema: ${file(models/create-todo-model.json)}
+      - name: UpdateTodoRequest
+        contentType: application/json
+        schema: ${file(models/update-todo-model.json)}
 
 provider:
   name: aws
@@ -50,12 +50,6 @@ provider:
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - xray:PutTelemetryRecords
-          - xray:PutTraceSegments
-        Resource: "*"
 
   GetTodos:
     handler: src/lambda/http/getTodos.handler
@@ -76,7 +70,6 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.INDEX_NAME}
       - Effect: Allow
         Action:
-          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: "*"
 
@@ -88,9 +81,9 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
-    request:
-      schemas:
-        'application/json': ${file(models/create-todo-model.json)}
+          request:
+            schemas:
+              'application/json': ${file(models/create-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -98,7 +91,6 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
-          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: "*"
 
@@ -110,9 +102,9 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer: Auth
-    request:
-      schemas:
-        'application/json': ${file(models/update-todo-model.json)}
+          request:
+            schemas:
+              'application/json': ${file(models/update-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -120,9 +112,9 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
-          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource: "*"
+        Resource:
+          - "*"
 
   DeleteTodo:
     handler: src/lambda/http/deleteTodo.handler
@@ -139,9 +131,9 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
-          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource: "*"
+        Resource:
+          - "*"
 
   GenerateUploadUrl:
     handler: src/lambda/http/generateUploadUrl.handler
@@ -163,9 +155,9 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
-          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource: "*"
+        Resource:
+          - "*"
 resources:
   Resources:
     GatewayResponseDefault4XX:
