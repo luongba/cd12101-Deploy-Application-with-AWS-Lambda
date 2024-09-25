@@ -50,6 +50,12 @@ provider:
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
 
   GetTodos:
     handler: src/lambda/http/getTodos.handler
@@ -70,6 +76,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.INDEX_NAME}
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: "*"
 
@@ -91,6 +98,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: "*"
 
@@ -112,6 +120,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource:
           - "*"
@@ -131,6 +140,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource:
           - "*"
@@ -155,6 +165,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource:
           - "*"
