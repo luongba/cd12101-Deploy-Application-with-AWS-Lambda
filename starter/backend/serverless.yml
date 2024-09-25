@@ -45,11 +45,7 @@ provider:
   iam:
     role:
       statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTelemetryRecords
-            - xray:PutTraceSegments
-          Resource: "*"
+        # Remove global X-Ray permissions from here
 
 functions:
   Auth:

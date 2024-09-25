@@ -1,5 +1,4 @@
 import { TodosAccess } from "./todosAcess";
-import { AttachmentUtils } from "./attachmentUtils";
 import { TodoItem } from "../models/TodoItem";
 import { CreateTodoRequest } from "../requests/CreateTodoRequest";
 import { UpdateTodoRequest } from "../requests/UpdateTodoRequest";
@@ -7,7 +6,6 @@ import { createLogger } from "../utils/logger";
 import * as uuid from "uuid";
 
 const logger = createLogger("TodosAccess");
-const attatchmentUtils = new AttachmentUtils();
 const todosAccess = new TodosAccess();
 
 export async function CreateTodo(
@@ -17,13 +15,12 @@ export async function CreateTodo(
   logger.info("Call function CreateTodo");
   const todoId = uuid.v4();
   const createdAt = new Date().toISOString();
-  const s3AttachUrl = attatchmentUtils.getAttachmentUrl(userId);
   const _newItem = {
     userId,
     todoId,
     createdAt,
     done: false,
-    attachmentUrl: s3AttachUrl,
+    attachmentUrl: null,
     ...newItem,
   };
 
