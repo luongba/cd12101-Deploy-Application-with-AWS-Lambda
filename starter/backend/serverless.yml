@@ -42,15 +42,6 @@ provider:
   logs:
     restApi: true
 
-  # iam:
-  #   role:
-  #     statements:
-  #       - Effect: Allow
-  #         Action:
-  #           - xray:PutTelemetryRecords
-  #           - xray:PutTraceSegments
-  #         Resource: "*"
-
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
@@ -120,8 +111,7 @@ functions:
         Action:
           - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource:
-          - "*"
+        Resource: "*"
 
   DeleteTodo:
     handler: src/lambda/http/deleteTodo.handler
@@ -140,8 +130,7 @@ functions:
         Action:
           - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource:
-          - "*"
+        Resource: "*"
 
   GenerateUploadUrl:
     handler: src/lambda/http/generateUploadUrl.handler
@@ -165,8 +154,8 @@ functions:
         Action:
           - xray:PutTelemetryRecords
           - xray:PutTraceSegments
-        Resource:
-          - "*"
+        Resource: "*"
+
 resources:
   Resources:
     GatewayResponseDefault4XX:
